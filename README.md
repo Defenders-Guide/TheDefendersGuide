@@ -1,3 +1,4 @@
+![Defenders_Guide_Logo](https://user-images.githubusercontent.com/12716538/195488746-fea02cfa-cfab-4e4b-8576-d163d5a39f72.png)
 # The Defender's Guide - It's Dangerous to Defend Alone, Take This!
 
 ## What is the Defender's Guide?
@@ -8,3 +9,4 @@ Too often as defenders we need to have 900 tabs open with blog posts, documentat
 Each guide has a long-form explanation of the underlying technology, and detection or visibility guidance.
 
 The goal is to expand to common technologies for Windows, MacOS, and Linux. If you have any suggestions feel free to reach out to @jsecurity101 or @v3r5ace on Twitter.
+
