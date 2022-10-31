@@ -42,7 +42,7 @@ The following table is provided by [Microsoft](https://learn.microsoft.com/en-us
 
 ![standard hives](img/standard_hives.png)
 
-Note: If you are wanting to dive deeper into Registry Internals/Configuration Manager we recommend reading the Windows Internals Part 2 book, specifically Chapter 10.
+*Note: If you are wanting to dive deeper into Registry Internals/Configuration Manager we recommend reading the Windows Internals Part 2 book, specifically Chapter 10.*
 
 ### Registry Key Values
 There are a set number of potential registry value types for a key. Each one is associated with a type ID and type name. The below table outlines the Type ID and Type Name values that can appear in the registry (with a little flavor added):
