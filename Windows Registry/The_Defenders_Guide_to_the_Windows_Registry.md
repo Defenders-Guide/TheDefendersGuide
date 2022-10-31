@@ -1,6 +1,8 @@
 # The Defender's Guide to the Windows Registry
 It's dangerous to defend the registry alone! Take this!
 
+![logo](img/logo.png)
+
 Authors: Luke Paine & Jonathan Johnson
 
 ## Introduction
@@ -12,7 +14,7 @@ The guides will not be limited to technology-related topics, Defender's Guides t
 
 ## Underlying Technology
 ### Registry Overview
-The registry is a hierarchical database on Windows systems that plays a major part in the configuration and control of the system. The registry, described by Microsoft, is: 
+The registry is a database on Windows systems that plays a major part in the configuration and control of the system. The registry, described by [Microsoft](https://learn.microsoft.com/en-us/troubleshoot/windows-server/performance/windows-registry-advanced-users), is: 
 > A central hierarchical database used in Windows 98, Windows CE, Windows NT, and Windows 2000 used to store information that is necessary to configure the system for one or more users, applications, and hardware devices.
 The Registry contains information that Windows continually references during operation, such as profiles for each user, the applications installed on the computer and the types of documents that each can create, property sheet settings for folders and application icons, what hardware exists on the system, and the ports that are being used.
 ### Registry Usage
@@ -30,22 +32,22 @@ It's easy to think of the registry as one big file that is sitting on disk. This
 
 As previously mentioned, the registry is a hierarchical database that has a tree format structure. Meaning there that each node within this tree is considered a key and in turn can have subkeys and entries called values. At the very top of this database are the root keys that can be thought of as the main directories for the subkeys embedded within them. There are 5 main root keys:
 
-Root Keys
+![root keys](img/root_keys.png)
 
 Windows also has a concept of predefined keys, which act as a simple way for registry related functions to refer to a given root key. This concept makes traversing the registry much easier as it provides a reliable starting point to locate the sub-key(s) you wish to query, create, or modify. 
 
-Underneath these root keys are registry hives, which are a group of keys/values in the registry that has an associated file that the configuration manager will load and link with the root keys. Hives can be found within the registry at ```HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\hivelist```
+Underneath these root keys are [registry hives](https://learn.microsoft.com/en-us/windows/win32/sysinfo/registry-hives), which are a group of keys/values in the registry that has an associated file that the configuration manager will load and link with the root keys. Hives can be found within the registry at ```HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\hivelist```
 
-The following table is provided by Microsoft as the standard hives and their supporting files:
+The following table is provided by [Microsoft](https://learn.microsoft.com/en-us/windows/win32/sysinfo/registry-hives) as the standard hives and their supporting files:
 
-Standard Hives
+![standard hives](img/standard_hives.png)
 
 Note: If you are wanting to dive deeper into Registry Internals/Configuration Manager we recommend reading the Windows Internals Part 2 book, specifically Chapter 10.
 
 ### Registry Key Values
 There are a set number of potential registry value types for a key. Each one is associated with a type ID and type name. The below table outlines the Type ID and Type Name values that can appear in the registry (with a little flavor added):
 
-Registry Value Types
+![registry value types](img/registry_value_types.png)
 
 ## Registry Size Limits
 
@@ -66,31 +68,31 @@ There are a variety of native ways to interact with the registry, but the follow
 - .REG File Interaction
 - Group Policy
 - Windows Management Instrumentation
-  - StdRegProv Class
+  - [StdRegProv Class](https://learn.microsoft.com/en-us/previous-versions/windows/desktop/regprov/stdregprov?redirectedfrom=MSDN)
 - Windows API Interaction
-  - RegCreateKey*
-  - RegSetValue*
-  - RegEnumValue*
-  - RegQueryValue*
-  - RegConnectRegistry*
-  - etc…
+  - [RegCreateKey*](https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regcreatekeyw)
+  - [RegSetValue*](https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetvaluew)
+  - [RegEnumValue*](https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regenumvaluew)
+  - [RegQueryValue*](https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regqueryvaluew)
+  - [RegConnectRegistry*](https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regconnectregistryw)
+  - [etc…](https://learn.microsoft.com/en-us/windows/win32/sysinfo/registry-functions)
 
-It is worth noting that users may interact with the registry remotely through the RemoteRegistry service. This service is off by default, but may be turned on by administrators. This service runs on top of the Windows Remote Registry Protocol. More information from a defensive perspective can be found on the MSRPC-to-ATTACK by Jonathan Johnson.
+It is worth noting that users may interact with the registry remotely through the RemoteRegistry service. This service is off by default, but may be turned on by administrators. This service runs on top of the [Windows Remote Registry Protocol](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-rrp/0fa3191d-bb79-490a-81bd-54c2601b7a78). More information from a defensive perspective can be found on the [MSRPC-to-ATTACK](https://github.com/jsecurity101/MSRPC-to-ATTACK/blob/main/documents/MS-RRP.md) by Jonathan Johnson.
 
-*MalAPI provides a reference of Windows API functions and correlates them to different known attacks. This is a useful resource for determining how registry interaction APIs are abused by attackers.* 
+*[MalAPI](https://malapi.io) provides a reference of Windows API functions and correlates them to different known attacks. This is a useful resource for determining how registry interaction APIs are abused by attackers.* 
 
 ## Registry Security
 
 All registry keys are securable objects, meaning they have a security descriptor which can be used to configure access control and auditing conditions for sub-keys and their values. Within security descriptors are two access control lists (ACLs):
 
-- The Discretionary Access Control List (DACL) - in charge of allowing/denying access
-- The System Access Control List (SACL) - which for the most part is used for auditing when attempts of access are made to the target object.
+- The [Discretionary Access Control List (DACL)](https://learn.microsoft.com/en-us/windows/win32/secauthz/access-control-lists) - in charge of allowing/denying access
+- [The System Access Control List (SACL)](https://learn.microsoft.com/en-us/windows/win32/secauthz/access-control-lists) - which for the most part is used for auditing when attempts of access are made to the target object.
 
 Within each ACL are access control entries (ACEs) that specify the access rights allowed, denied, or audited for a given user, group, etc.
 
-The object-specific registry rights are defined by Microsoft as:
+The object-specific registry rights are defined by [Microsoft](https://learn.microsoft.com/en-us/windows/win32/sysinfo/registry-key-security-and-access-rights) as:
 
-Registry Object Permissions
+![registry object permissions](img/registry_object_permissions.png)
 
 ### SACLs
 
@@ -100,29 +102,29 @@ In this example, we are going to look at the `HKEY_CLASSES_ROOT\PROTOCOLS\Handle
 
 If we open regedit.exe and navigate to the `HKEY_CLASSES_ROOT\PROTOCOLS\Handler\vbscript` key, we can right-click and click on "Permissions", then hit "Advanced".
 
-IMAGE
+![advanced security settings](img/advanced_security_settings.png)
 
 This gives us the page above. Next we want to hit "Auditing", then hit "Add". This will give us the *Auditing Entry* page below.
 
-IMAGE 
+![auditing entry](img/auditing_entry.png) 
 
 Next, click on "Select a principal" and input "Everyone", then press "Show Advanced Permissions". For this example, we are going to check "Query".
 
 *The purpose of this action is to audit when any user performs a query registry operation on this particular key. For more information on the access rights involved, reference the table earlier in the post.*
 
-IMAGE 
+![advanced permissions](img/advanced_permissions.png) 
 
 After applying these settings, we open up cmd.exe and run the following mshta command:
 
 ```mshta vbscript:(CreateObject("Wscript.Shell")).Run("powershell",1,True)(window.close)```
 
-Navigating to the Windows Event Log and viewing event 4663 (4663 events are only generated after enabling Audit Object Access) within the Security Log, you can see an event that was triggered once the command queried that registry value:
+Navigating to the Windows Event Log and viewing [event 4663](https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4663) (4663 events are only generated after enabling [Audit Object Access](https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/basic-audit-object-access)) within the Security Log, you can see an event that was triggered once the command queried that registry value:
 
-IMAGE 
+![event 4663](img/event_4663.png) 
 
 In situations where certain object operations are not logged, SACLs can be used to provide that additional insight.
 
-*Note: A scriptable version of the SACL set can be found in the Set-AuditRule.ps1 PowerShell script by Roberto Rodriguez. Just update the script to have the correct registry keys you want to set SACLs for.*
+*Note: A scriptable version of the SACL set can be found in the [Set-AuditRule.ps1](https://github.com/OTRF/Set-AuditRule/blob/master/Set-AuditRule.ps1) PowerShell script by Roberto Rodriguez. Just update the script to have the correct registry keys you want to set SACLs for.*
 
 ## Relevant Telemetry
 This section will focus on native telemetry along with EDR telemetry that is exposed to us for use. Native telemetry will include Window Security Events (WSE) and EDR will include Microsoft Defender for Endpoint/Sysmon events.
@@ -139,7 +141,7 @@ This section will focus on native telemetry along with EDR telemetry that is exp
 - **DeviceRegistryEvents:** RegistryValueDeleted
 - **DeviceRegistryEvents:** RegistryValueSet
 
-*FalconForce has publicly documented ways to leverage registry events within MDE in their FalconFriday repository.*
+*FalconForce has publicly documented ways to leverage registry events within MDE in their [FalconFriday](https://github.com/FalconForceTeam/FalconFriday/tree/master/Persistence) repository.*
 
 *EDRs can opt into registry telemetry by leveraging the CmReigsterCallback function. This provides roughly 60 registry operations that can be captured.*
 
@@ -148,7 +150,7 @@ This section will focus on native telemetry along with EDR telemetry that is exp
 - **Event ID 13** - Registry Value Set
 - **Event ID 14** - Registry Key/Value Rename
 
-*An explanation can be found here, and an example Jupyter Notebook using this telemetry can be found here.*
+*An explanation can be found [here](https://posts.specterops.io/utilizing-rpc-telemetry-7af9ea08a1d5), and an example Jupyter Notebook using this telemetry can be found [here](https://gist.github.com/jsecurity101/b61daa2b7f2d8a7aeec187a74ea83ab1).*
 
 ## Telemetry Notes
 
@@ -163,7 +165,7 @@ The telemetry volume of the registry keys we have provided will change depending
 
 ## External Resources
 - Books
-  - Windows Internals Part 2 Chapter 10
+  - [Windows Internals Part 2 Chapter 10](https://www.amazon.com/Windows-Internals-Part-2-7th/dp/0135462401/ref=sr_1_1?crid=DVX4QQQKH4M7&keywords=windows+internals+part+2&qid=1666578591&qu=eyJxc2MiOiIxLjA5IiwicXNhIjoiMC43NSIsInFzcCI6IjEuMDgifQ%3D%3D&sprefix=windows+internals+part+%2Caps%2C101&sr=8-1)
 - General Microsoft Registry Documentation
   - Microsoft Documentation on the Registry
   - https://learn.microsoft.com/en-us/troubleshoot/windows-server/performance/windows-registry-advanced-users
@@ -189,8 +191,8 @@ The telemetry volume of the registry keys we have provided will change depending
   - https://enigma0x3.net/2016/05/25/userland-persistence-with-scheduled-tasks-and-com-handler-hijacking/
   - https://posts.specterops.io/utilizing-rpc-telemetry-7af9ea08a1d5
 - Projects
-  - MSRPC-to-ATTACK
-  - OTRF
-  - FalconFriday
-  - Remote_Service_Creation.ipynb
-  - MalAPI
+  - [MSRPC-to-ATTACK](https://github.com/jsecurity101/MSRPC-to-ATTACK/blob/main/documents/MS-RRP.md)
+  - [OTRF](https://github.com/OTRF/Set-AuditRule/blob/master/Set-AuditRule.ps1)
+  - [FalconFriday](https://github.com/FalconForceTeam/FalconFriday/tree/master/Persistence)
+  - [Remote_Service_Creation.ipynb](https://gist.github.com/jsecurity101/b61daa2b7f2d8a7aeec187a74ea83ab1)
+  - [MalAPI](https://malapi.io)
