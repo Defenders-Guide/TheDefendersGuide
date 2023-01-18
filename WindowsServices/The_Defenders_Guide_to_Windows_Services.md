@@ -68,6 +68,7 @@ sc.exe sdshow <ServiceName>
 ```
 ![sc](img/sc.png)
 
+
 **PowerShell** (really only helpful if another folder of "Security" is held within the service's name key):
 ```
 $SD = Get-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Services\Schedule\Security\
@@ -86,7 +87,7 @@ The SCM actually has its own access rights as well. These are built out so that 
 
 ![AccessRightsSCM](img/accessrightsscm.png)
 
-Lastly within this section we want to briefly mention a special "kind" of service - protected services. These are very common with EDR vendors. Alex Ionescu has a great blog post series called [The Evolution of Protected Processes](https://www.crowdstrike.com/blog/evolution-protected-processes-part-1-pass-hash-mitigations-windows-81/). Not to get into specifics, but if a service has a value in it called "LaunchedProtected" and the value is set to 0x02, 0x08, then the service binary (either .exe or .dll) is running as a protected process. Jonathan Johnson wrote a PowerShell script that can be found in his [gist](https://gist.github.com/jsecurity101/6b9e87f5a428f31d41ffc8c1ee05a999) that will enumerate all protected processes and services.
+Lastly, within this section we want to briefly mention a special "kind" of service - protected services. These are very common with EDR vendors. Alex Ionescu has a great blog post series called [The Evolution of Protected Processes](https://www.crowdstrike.com/blog/evolution-protected-processes-part-1-pass-hash-mitigations-windows-81/). Not to get into specifics, but if a service has a value in it called "LaunchedProtected" and the value is set to 0x02, 0x08, then the service binary (either .exe or .dll) is running as a protected process. Jonathan Johnson wrote a PowerShell script that can be found in his [gist](https://gist.github.com/jsecurity101/6b9e87f5a428f31d41ffc8c1ee05a999) that will enumerate all protected processes and services.
 
 ![GetProtected](img/getprotectedservice.png)
 
