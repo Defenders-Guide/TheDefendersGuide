@@ -1,5 +1,5 @@
-# The Defender's Guide to the Windows Registry
-It's dangerous to defend the registry alone! Take this!
+# The Defender's Guide to Windows Services
+It's dangerous to find malicious services alone! Take this!
 
 ![logo](img/logo.png)
 
