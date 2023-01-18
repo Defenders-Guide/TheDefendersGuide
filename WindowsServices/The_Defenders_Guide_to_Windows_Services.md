@@ -163,3 +163,4 @@ As seen above, many of the events are dependent on the RPC call RCreateService* 
 * [QueryServiceObjectSecurity](https://learn.microsoft.com/en-us/windows/desktop/api/winsvc/nf-winsvc-queryserviceobjectsecurity)
 * [ProtectionChecks.ps1](https://gist.github.com/jsecurity101/6b9e87f5a428f31d41ffc8c1ee05a999)
 * [The Evolution of Protected Processes](https://www.crowdstrike.com/blog/evolution-protected-processes-part-1-pass-hash-mitigations-windows-81/)
+ 
